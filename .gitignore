@@ -1,0 +1,6 @@
+.idea
+mysql-data
+app/node_modules
+app/vendor
+app/var
+app/public/build

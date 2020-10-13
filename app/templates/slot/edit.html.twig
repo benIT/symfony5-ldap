@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Slot{% endblock %}
+
+{% block body %}
+    <h1>Edit Slot</h1>
+
+    {{ include('slot/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('slot_index') }}">back to list</a>
+
+    {{ include('slot/_delete_form.html.twig') }}
+{% endblock %}

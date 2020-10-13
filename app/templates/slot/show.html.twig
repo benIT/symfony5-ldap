@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Slot{% endblock %}
+
+{% block body %}
+    <h1>Slot #{{ slot.id }} - {{ slot.time ? slot.time|date('H:i:s') : '' }} - capacity: {{ slot.capacity }}</h1>
+    {% for booking in slot.bookings %}
+        <table class="table">
+            <tbody>
+            <th>user</th>
+            <th>quantity</th>
+            <th>booking date</th>
+            <th>State</th>
+            <tr>
+                <td>{{ booking.user.email }}</td>
+                <td>{{ booking.quantity }}</td>
+                <td>{{ booking.date|date }}</td>
+                <td>{{ booking.isCanceled ? 'canceled': 'ok' }}</td>
+            </tr>
+            </tbody>
+        </table>
+        <hr>
+
+    {% endfor %}
+
+    <a href="{{ path('slot_index') }}">back to list</a>
+
+    <a href="{{ path('slot_edit', {'id': slot.id}) }}">edit</a>
+
+    {{ include('slot/_delete_form.html.twig') }}
+{% endblock %}

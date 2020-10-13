@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Booking index{% endblock %}
+
+{% block body %}
+    <h1>Booking index</h1>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Booking Date</th>
+            <th>Quantity</th>
+            <th>State</th>
+            <th>cancel</th>
+            <th>service date</th>
+            <th>slot</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for booking in bookings %}
+            <tr>
+                <td>{{ booking.id }}</td>
+                <td>{{ booking.date ? booking.date|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ booking.quantity }}</td>
+                <td>{{ booking.isCanceled ? 'canceled':'ok' }}</td>
+                <td>
+                    <form method="post" action="{{ path('booking_cancel', {'id': booking.id}) }}"
+                          onsubmit="return confirm('Are you sure you want to delete this item?');">
+                        <input type="submit" value="cancel this booking!" class="btn">
+                    </form>
+                </td>
+                <td>{{ booking.slot.service.date|date('d-m-Y') }}</td>
+                <td>{{ booking.slot.time|date('H:i') }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('booking_new') }}">Create new</a>
+{% endblock %}

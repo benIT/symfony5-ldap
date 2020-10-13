@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/sticky-footer-navbar.css">
+    {% block stylesheets %}
+    {% endblock %}
+    <title>booking app</title>
+</head>
+<body>
+
+<header>
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <a class="navbar-brand" href="{{ path('app_home') }}">Booking app</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+                aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ path('service_index') }}">Service</a>
+                </li>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{{ path('user_index') }}">User</a>
+                    </li>
+                {% endif %}
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ path('booking_my') }}">My bookings</a>
+                </li>
+
+
+            </ul>
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                <a class="" href="{{ path('app_logout') }}">Logout</a>
+            {% else %}
+                <a class="" href="{{ path('app_login') }}">Login</a>
+            {% endif %}
+            {#                        <form class="form-inline mt-2 mt-md-0">#}
+            {#                                <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">#}
+            {#                                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>#}
+            {#                        </form>#}
+        </div>
+    </nav>
+</header>
+
+<!-- Begin page content -->
+<main role="main" class="container">
+
+    {% block body %}
+    {% endblock %}
+</main>
+<footer class="footer">
+    <div class="container">
+        <span class="text-muted">Place sticky footer content here.</span>
+    </div>
+</footer>
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+{% block javascripts %}
+{% endblock %}
+</body>
+</html>
+
+
+{#<!DOCTYPE html>#}
+{#<html>#}
+{#<head>#}
+{#        <meta charset="UTF-8">#}
+{#        <title>{% block title %}Welcome!{% endblock %}</title>#}
+{#        {% block stylesheets %}#}
+{#                <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Spartan&display=swap">#}
+{#                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />#}
+{#                {{ encore_entry_link_tags('app') }}#}
+{#        {% endblock %}#}
+{#</head>#}
+{#<body>#}
+{#<nav class="navbar navbar-light bg-light" style="height: 100px;">#}
+{#        <a class="navbar-brand" href="{{ path('app_home') }}">#}
+{#                <i style="color: #444; font-size: 2rem;" class="pb-1 fad fa-cauldron"></i>#}
+{#                <p class="pl-2 d-inline font-weight-bold" style="color: #444;">NewsLetter manager</p>#}
+{#        </a>#}
+{#        <a href="{{ path('app_login') }}" class="btn btn-dark">Login</a>#}
+{#</nav>#}
+
+{#{% block body %}{% endblock %}#}
+{#<footer class="mt-5 p-3 text-center">#}
+{#        Made with <i style="color: red;" class="fa fa-heart"></i> by ben masson</a>#}
+{#</footer>#}
+{#{% block javascripts %}#}
+{#        {{ encore_entry_script_tags('app') }}#}
+
+{#{% endblock %}#}
+{#</body>#}
+{#</html>#}

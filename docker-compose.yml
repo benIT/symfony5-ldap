@@ -1,0 +1,49 @@
+version: "3"
+services:
+  db:
+    image: mariadb
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+    volumes:
+      - ./mysql-data:/var/lib/mysql
+    ports:
+      - 3306:3306
+  web:
+    image: benit/buster-php-7.3
+    environment:
+      - TZ=Europe/Paris
+      - http_proxy
+      - https_proxy
+      - HTTP_PROXY
+      - HTTPS_PROXY
+      - no_proxy
+    working_dir: /var/www/app
+    ports:
+      - 8080:80
+    links:
+      - db:database
+    depends_on:
+      - db
+    volumes:
+      - ./app:/var/www/app/
+      - ./apache2/000-default.conf:/etc/apache2/sites-enabled/000-default.conf
+  ldap:
+    image: broadinstitute/slapd:2.0
+    domainname: "example.org"
+    hostname: "example.org"
+    environment:
+      LDAP_DEBUGLEVEL: 1
+      LDAP_DOMAIN: mycorp.com
+      LDAP_ORGANIZATION: "My Mega Corporation"
+      LDAP_ROOTPASS: s3cr3tpassw0rd
+    ports:
+      - 389:389
+  phpldapadmin:
+    image: osixia/phpldapadmin:latest
+    environment:
+      PHPLDAPADMIN_LDAP_HOSTS: "ldap"
+      PHPLDAPADMIN_HTTPS: "false"
+    ports:
+      - "8089:80"
+    depends_on:
+      - ldap

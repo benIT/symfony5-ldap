@@ -1,0 +1,52 @@
+security:
+  encoders:
+    App\Entity\User:
+      algorithm: auto
+
+  # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+  providers:
+# used to reload user from session & other features (e.g. switch_user)
+#  app_user_provider:
+#    entity:
+#      class: App\Entity\User
+#      property: email
+#  my_ldap:
+#    ldap:
+#      service: Symfony\Component\Ldap\Ldap
+#      base_dn: "%env(LDAP_BASE_DN)%"
+#      search_dn: "%env(LDAP_SEARCH_DN)%"
+#      search_password: "%env(LDAP_SEARCH_PASSWORD)%"
+#      default_roles: ROLE_USER
+#      uid_key: uid
+#      extra_fields: ['mail']
+    ldap_user_provider:
+      id: App\Security\LdapUserProvider
+  firewalls:
+    dev:
+      pattern: ^/(_(profiler|wdt)|css|images|js)/
+      security: false
+    main:
+      anonymous: true
+      lazy: true
+      provider: ldap_user_provider
+      logout:
+        path:   app_logout
+      guard:
+        authenticators:
+          - App\Security\LdapFormAuthenticator
+        # where to redirect after logout
+        # target: app_any_route
+
+      # activate different ways to authenticate
+      # https://symfony.com/doc/current/security.html#firewalls-authentication
+
+      # https://symfony.com/doc/current/security/impersonating_user.html
+      # switch_user: true
+
+  # Easy way to control access for large sections of your site
+  # Note: Only the *first* access control that matches will be used
+  access_control:
+    - { path: ^/slot, roles: IS_AUTHENTICATED_FULLY }
+    - { path: ^/service, roles: IS_AUTHENTICATED_FULLY }
+    - { path: ^/booking, roles: IS_AUTHENTICATED_FULLY }
+    - { path: ^/user, roles: ROLE_ADMIN }

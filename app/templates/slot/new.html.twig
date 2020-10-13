@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Slot{% endblock %}
+
+{% block body %}
+    <h1>Create new Slot</h1>
+
+    {{ include('slot/_form.html.twig') }}
+
+    <a href="{{ path('slot_index') }}">back to list</a>
+{% endblock %}

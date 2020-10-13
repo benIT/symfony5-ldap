@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Service{% endblock %}
+
+{% block body %}
+    <h1>Service {{ service.name }} - {{ service.date ? service.date|date('Y-m-d') : '' }} </h1>
+
+    <table class="table">
+        <th>slot</th>
+        <th>time</th>
+        <th>capacity</th>
+        <tbody>
+        {% for slot in service.slots %}
+
+            <tr class=" {{ slot.getRemainingPlaces>0 ? 'table-success':'table-danger' }}">
+                <th>slot</th>
+                <td>{{ slot.time ? slot.time|date('H:i:s') : '' }}</td>
+                <td>{{ slot.getRemainingPlaces }}/{{ slot.capacity }}</td>
+                <td>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <a href="{{ path('slot_show', {'id': slot.id}) }}">show</a>
+                        <a href="{{ path('slot_edit', {'id': slot.id}) }}">edit</a>
+                    {% endif %}
+                    <a href="{{ path('slot_book', {'id': slot.id}) }}">book</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+
+
+    <a href="{{ path('service_index') }}">back to list</a>
+
+    <a href="{{ path('service_edit', {'id': service.id}) }}">edit</a>
+
+    {{ include('service/_delete_form.html.twig') }}
+{% endblock %}
